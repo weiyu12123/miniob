@@ -51,18 +51,23 @@ class Table;
 class TupleSchema 
 {
 public:
-  void append_cell(const TupleCellSpec &cell)
+  void append_cell(const TupleCellSpec &cell) 
   {
-    cells_.push_back(cell);
+     cells_.push_back(cell); 
   }
-  void append_cell(const char *table, const char *field)
+  void append_cell(const char *table, const char *field, const AggrOp aggr = AggrOp::AGGR_NONE)
   {
-    append_cell(TupleCellSpec(table, field));
+    append_cell(TupleCellSpec(table, field, nullptr, aggr));
   }
-  void append_cell(const char *alias)
+  void append_cell(const char *table, const char *field) 
   {
-    append_cell(TupleCellSpec(alias));
+     append_cell(TupleCellSpec(table, field)); 
   }
+  void append_cell(const char *alias, const AggrOp aggr = AggrOp::AGGR_NONE) 
+  {
+    append_cell(TupleCellSpec(alias, aggr)); 
+  }
+
   int cell_num() const
   {
     return static_cast<int>(cells_.size());
