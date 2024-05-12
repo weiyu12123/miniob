@@ -549,7 +549,6 @@ rel_attr_aggr:
   ;
 
 rel_attr_aggr_list:
-/* empty */
     {
       $$ = nullptr;
     }
