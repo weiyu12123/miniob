@@ -342,16 +342,14 @@ RC PhysicalPlanGenerator::create_plan(UpdateLogicalOperator &update_oper, unique
     LogicalOperator *child_oper = child_opers.front().get();
     rc = create(*child_oper, child_physical_oper);
     if (rc != RC::SUCCESS) {
+      LOG_WARN("failed to create physical operator. rc=%s", strrc(rc));
       return rc;
     }
   }
-
-  oper = unique_ptr<PhysicalOperator>(new UpdatePhysicalOperator(update_oper.table(),update_oper.field(),update_oper.value()));
+  oper = unique_ptr<PhysicalOperator>(new UpdatePhysicalOperator(update_oper.table(), update_oper.value(), update_oper.field()));
 
   if (child_physical_oper) {
     oper->add_child(std::move(child_physical_oper));
   }
-  
   return rc;
-  
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) OceanBase and/or its affiliates. All rights reserved.
+/* Copyright (c) 2021 OceanBase and/or its affiliates. All rights reserved.
 miniob is licensed under Mulan PSL v2.
 You can use this software according to the terms and conditions of the Mulan PSL v2.
 You may obtain a copy of Mulan PSL v2 at:
@@ -9,40 +9,40 @@ MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 See the Mulan PSL v2 for more details. */
 
 //
-// Created by WangYunlai on 2022/12/26.
+// Created by WangYunlai on 2023/4/25.
 //
 
 #pragma once
-#include "storage/field/field.h"
+
+#include <vector>
+
 #include "sql/operator/logical_operator.h"
 #include "sql/parser/parse_defs.h"
-#include <vector>
-class UpdateLogicalOperator : public LogicalOperator 
+#include "storage/field/field.h"
+
+
+
+/**
+ * @brief 插入逻辑算子
+ * @ingroup LogicalOperator
+ */
+class UpdateLogicalOperator : public LogicalOperator
 {
 public:
-  UpdateLogicalOperator(Table *table,Field field,Value value);
+  UpdateLogicalOperator(Table *table, Value value, Field field);
   virtual ~UpdateLogicalOperator() = default;
 
   LogicalOperatorType type() const override
   {
     return LogicalOperatorType::UPDATE;
   }
-  
-  Table *table() const
-  {
-    return table_;
-  }
-  const Field field() const 
-  {
-    return field_;
-  }
-  const Value value() const 
-  {
-    return value_;
-  }
+
+  Table *table() const { return table_; }
+  Value value() const { return value_; }
+  Field field() const {return field_;}
 
 private:
   Table *table_ = nullptr;
-  Field field_;
   Value value_;
+  Field field_;
 };

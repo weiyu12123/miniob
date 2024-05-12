@@ -13,12 +13,11 @@ See the Mulan PSL v2 for more details. */
 //
 
 #pragma once
-#include "storage/field/field.h"
+
 #include "sql/operator/physical_operator.h"
-#include "storage/field/field_meta.h"
-#include "storage/table/table.h"
+
 class Trx;
-class DeleteStmt;
+class UpdateStmt;
 
 /**
  * @brief 物理算子，删除
@@ -27,7 +26,8 @@ class DeleteStmt;
 class UpdatePhysicalOperator : public PhysicalOperator
 {
 public:
-  UpdatePhysicalOperator(Table *table,Field field,Value value)
+  UpdatePhysicalOperator(Table *table, Value value, Field field) 
+    : table_(table), value_(value), field_(field)
   {}
 
   virtual ~UpdatePhysicalOperator() = default;
@@ -48,7 +48,7 @@ public:
 
 private:
   Table *table_ = nullptr;
+  Value value_ ;
   Field field_;
-  Value value_;
   Trx *trx_ = nullptr;
 };

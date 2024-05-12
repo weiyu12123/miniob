@@ -43,6 +43,12 @@ RC UpdatePhysicalOperator::next()
   if (children_.empty()) {
     return RC::RECORD_EOF;
   }
+  const char * field_name = field_.field_name();
+  const FieldMeta * field_meta = table_->table_meta().field(field_name);
+  if (value_.attr_type() != field_meta->type()) {
+    LOG_WARN("failed to update because of inconsistent types");
+    return RC::INVALID_ARGUMENT;
+  }
   PhysicalOperator *child = children_[0].get();
 
 
@@ -55,8 +61,6 @@ RC UpdatePhysicalOperator::next()
 
     RowTuple *row_tuple = static_cast<RowTuple *>(tuple);
     Record &record = row_tuple->record();
-    const char * field_name=field_.field_name();
-    const FieldMeta * field_meta = table_->table_meta().field(field_name);
     int offset_=field_meta->offset();
     int len_=field_meta->len();
     rc = trx_->update_record(table_, record, offset_, len_,value_);

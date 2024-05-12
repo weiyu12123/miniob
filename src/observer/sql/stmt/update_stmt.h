@@ -15,26 +15,23 @@ See the Mulan PSL v2 for more details. */
 #pragma once
 
 #include "common/rc.h"
+#include "sql/stmt/filter_stmt.h"
 #include "sql/stmt/stmt.h"
-#include "storage/field/field.h"
 
 class Table;
-class FilterStmt;
-class Field;
-class Value;
 
 /**
  * @brief 更新语句
  * @ingroup Statement
  */
-
 class UpdateStmt : public Stmt 
 {
 public:
   UpdateStmt() = default;
-  UpdateStmt(Table *table, Field  field, Value value, FilterStmt *filter_stmt);
+  UpdateStmt(Table *table, Value value, Field field, FilterStmt* filter_stmt);
 
-  StmtType type() const override{
+  StmtType type() const override
+  {
     return StmtType::UPDATE;
   }
 
@@ -46,21 +43,22 @@ public:
   {
     return table_;
   }
- 
-  const Field field() const{
-    return field_;
-  } 
-  const Value value() const{
+  const Value value() const
+  {
     return value_;
   }
-  FilterStmt *filter_stmt()const{
+  FilterStmt *filter_stmt() const
+  {
     return filter_stmt_;
+  }
+  const Field field() const
+  {
+    return field_;
   }
 
 private:
   Table *table_ = nullptr;
-  Field field_;
   Value value_;
   FilterStmt *filter_stmt_=nullptr;
-
+  Field field_;
 };

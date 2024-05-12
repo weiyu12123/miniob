@@ -9,11 +9,12 @@ MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 See the Mulan PSL v2 for more details. */
 
 //
-// Created by WangYunlai on 2022/12/26.
+// Created by WangYunlai on 2023/4/25.
 //
-#include "storage/field/field.h"
+
 #include "sql/operator/update_logical_operator.h"
 
-UpdateLogicalOperator::UpdateLogicalOperator(Table *table,Field field,Value value)
-                : table_(table),field_(field),value_(value)
-{}
+UpdateLogicalOperator::UpdateLogicalOperator(Table *table, Value value, Field field)
+    : table_(table), value_(value), field_(field)
+{
+}

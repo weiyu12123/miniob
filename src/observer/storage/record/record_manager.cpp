@@ -16,7 +16,7 @@ See the Mulan PSL v2 for more details. */
 #include "common/lang/bitmap.h"
 #include "storage/common/condition_filter.h"
 #include "storage/trx/trx.h"
-
+#include "record_manager.h"
 using namespace common;
 
 static constexpr int PAGE_HEADER_SIZE = (sizeof(PageHeader));
